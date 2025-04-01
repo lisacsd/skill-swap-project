@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Créer une compétence - SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo"><img src="img/logo.png" alt="Logo SkillSwap">SkillSwap</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="competences.html">Ajouter une offre</a>
+    </nav>
+    <a href="login.html" class="btn-login">Se connecter</a>
+  </header>
+
+  <main class="form-container">
+    <h1>Créer une offre de compétence</h1>
+
+    <form action="/ajouter-competence" method="post">
+      <div class="form-group">
+        <label for="titre">Titre de la compétence</label>
+        <input type="text" id="titre" name="titre" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="niveau">Niveau</label>
+        <select id="niveau" name="niveau">
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Avancé">Avancé</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="duree">Durée estimée (en heures)</label>
+        <input type="number" id="duree" name="duree" min="1" max="20" required>
+      </div>
+
+      <div class="form-group">
+        <label for="localisation">Localisation</label>
+        <input type="text" id="localisation" name="localisation">
+      </div>
+
+      <button type="submit" class="btn-primary">Publier l’offre</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy"></a>
+    </div>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
