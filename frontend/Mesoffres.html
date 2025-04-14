@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Créer une compétence - SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html">Mes offres</a>
+      <a href="Mesinscription.html">Mes inscriptions</a>
+      <a href="admin.html">Gérer les user</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" class="btn-login">Se connecter</a>
+      <a href="inscription.html" class="btn-login">S’inscrire</a>
+      <a href="profil.html" class="btn-login">Mon Compte</a>
+    </div>
+  </header>
+
+  <main >
+    <div class="form-container">
+      <h1>Créer une annonce</h1>
+
+      <form action="/ajouter-competence" method="post">
+        <div class="form-group">
+          <label for="titre">Titre de l'annonce</label>
+          <input type="text" id="titre" name="titre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="categorie">Catégorie</label>
+          <select id="categorie" name="categorie">
+              <option value="Art">Art</option>
+              <option value="Sport">Sport</option>
+              <option value="Informatique">Informatique</option>
+              <option value="Cuisine">Cuisine</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="niveau">Niveau</label>
+          <select id="niveau" name="niveau">
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Avancé">Avancé</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="duree">Durée estimée (en heures)</label>
+          <input type="number" id="duree" name="duree" min="1" max="20" required>
+        </div>
+
+        <div class="form-group">
+          <label for="localisation">Localisation</label>
+          <input type="text" id="localisation" name="localisation">
+        </div>
+
+        <button type="submit" class="btn-primary">Publier l’offre</button>
+      </form>
+    </div>
+    <section class="offres-section">
+      <h2>Mes proposition d'offres</h2>
+
+      <div class="offre">
+        <div class="offre-info">
+          <h3>Leçon de guitare</h3>
+          <p>En échange d’un cours de langue</p>
+          <p class="interesses">Intéressés : Maxime R., Romain B.</p>
+        </div>
+        <div class="offre-actions">
+          <button class="interet-btn">Modifier</button>
+          <button class="interet-btn">Supprimer</button>
+        </div>
+      </div>
+
+      <div class="offre">
+        <div class="offre-info">
+          <h3>Cours de développement Web : Basiques</h3>
+          <p>En échange d’un cours de piano</p>
+          <p class="interesses">Intéressés : Marie O., Antoine C., Sami R.</p>
+        </div>
+        <div class="offre-actions">
+          <button class="interet-btn">Modifier</button>
+          <button class="interet-btn">Supprimer</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy"></a>
+    </div>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
