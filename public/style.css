@@ -416,7 +416,6 @@ button.btn-primary {
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 20px;
-  display: flex;
   justify-content: space-between;
   position: relative;
 }
@@ -551,24 +550,6 @@ button.btn-primary {
 }
 
 
-.logout-button {
-  background-color: #f44336; /* Couleur rouge pour attirer l'attention */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  border-radius: 5px;
-}
-
-.logout-button:hover {
-  background-color: #d32f2f; /* Un peu plus sombre au survol */
-}
-
-#edit-form{
-  display: none;
-}
-
 .form-container form {
   display: none;
 }
@@ -602,44 +583,50 @@ button.btn-primary {
   transform: rotate(45deg);
 }
 
-
+/* conteneur de chaque offre */
 .offre {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 24px;
-  overflow: hidden;
+  overflow: hidden; /* hauteur compacte */
   transition: max-height 0.3s ease, padding 0.3s ease;
-  max-height: 180px;              /* hauteur “compacte” */
 }
 
-
-/* état “agrandi” */
-.offre.expanded {
-  max-height: 600px;              /* assez grand pour tout afficher */
-  padding-bottom: 40px;           /* espace pour le bouton interest */
+.container {
+  display: flex;
+  gap: 16px;
 }
 
-/* détails cachés par défaut */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 3;
+}
+
+#bouton-interet, .offre-actions{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.interest-btn {
+  background-color: #4a7aff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+/* détails cachés */
 .offre-details {
   display: none;
 }
 
-/* en mode “expanded”, on affiche en flex-row */
-.offre.expanded .offre-details {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  margin-top: 12px;
-}
-
-/* toggler “En savoir plus” */
+/* toggler */
 .toggle-text {
-  align-items: center;
   text-align: center;
   font-size: 0.8rem;
   color: #007bff;
@@ -647,7 +634,23 @@ button.btn-primary {
   margin-top: 8px;
 }
 
-.interest-btn{
-  align-items: center;
-  justify-content: flex-end;
+/* état “expanded” : on agrandit et on affiche les détails */
+.offre.expanded {
+        /* ou un max-height plus grand */
+  padding-bottom: 24px;
 }
+
+.offre.expanded .offre-details {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+
+#mes-offres-container{
+  max-height: none;  
+}
+
