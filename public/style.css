@@ -650,3 +650,7 @@ button.btn-primary {
   max-height: none;  
 }
 
+.logout-button{
+  background-color: #ff503c;
+  margin-top: 15px;
+}
