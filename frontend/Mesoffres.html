@@ -28,7 +28,10 @@
 
   <main >
     <div class="form-container">
-      <h1>Créer une annonce</h1>
+      <h1>Créer une annonce
+        <span id="toggle-icon">+</span>
+  
+      </h1>
 
       <form action="/ajouter-competence" method="post">
         <div class="form-group">
@@ -82,10 +85,8 @@
           <p>En échange d’un cours de langue</p>
           <p class="interesses">Intéressés : Maxime R., Romain B.</p>
         </div>
-        <div class="offre-actions">
-          <button class="interet-btn">Modifier</button>
-          <button class="interet-btn">Supprimer</button>
-        </div>
+        <button class="interet-btn">Supprimer</button>
+
       </div>
 
       <div class="offre">
@@ -103,7 +104,23 @@
     </section>
   </main>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const banner = document.querySelector('.form-container h1');
+      const form   = document.querySelector('.form-container form');
+      const icon   = document.getElementById('toggle-icon');
 
+      banner.addEventListener('click', () => {
+        // bascule l'affichage du formulaire
+        const isVisible = getComputedStyle(form).display !== 'none';
+        form.style.display = isVisible ? 'none' : 'block';
+        banner.classList.toggle('open', !isVisible);
+
+        icon.textContent = isVisible ? '+' : '–';
+      });
+    });
+
+  </script>
   <footer>
     <p>Suivez-nous</p>
     <div class="socials">

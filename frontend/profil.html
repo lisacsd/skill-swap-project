@@ -108,6 +108,17 @@
       });
     });
 
+      // Afficher formulaire de modification au clic
+    document.querySelector('.edit-button').addEventListener('click', function() {
+      document.querySelector('.form-container').style.display = 'none'; // cacher profil
+      document.querySelector('#edit-form').style.display = 'block'; // afficher formulaire
+    });
+    document.querySelector('submit').addEventListener('click', function() {
+      document.querySelector('.form-container').style.display = 'block'; // cacher profil
+      document.querySelector('#edit-form').style.display = 'none'; // afficher formulaire
+    });
+
+
     // Soumission du formulaire
     document.getElementById("edit-form").addEventListener("submit", function(e) {
       e.preventDefault();
