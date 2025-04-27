@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap - Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html">Mes offres</a>
+      <a href="Mesinscription.html">Mes inscriptions</a>
+      <a href="admin.html">Gérer les user</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" class="btn-login">Se connecter</a>
+      <a href="inscription.html" class="btn-login">S’inscrire</a>
+      <a href="profil.html" class="btn-login">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="message">
+        <h1>Trouvez la compétence idéale.</h1>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cours de guitare..." />
+        <button id="searchButton">Rechercher</button>
+      </div>
+    </section>
+
+    <section class="offres-section">
+      <h2>Offres du moment</h2>
+
+      <div class="offre">
+        <div class="offre-info">
+          <h3>Leçon de guitare</h3>
+          <p>En échange d’un cours de langue</p>
+          <p class="interesses">Intéressés : Maxime R., Romain B.</p>
+        </div>
+        <button class="interet-btn">Je suis intéressé !</button>
+      </div>
+
+      <div class="offre">
+        <div class="offre-info">
+          <h3>Cours de développement Web : Basiques</h3>
+          <p>En échange d’un cours de piano</p>
+          <p class="interesses">Intéressés : Marie O., Antoine C., Sami R.</p>
+        </div>
+        <button class="interet-btn">Je suis intéressé !</button>
+      </div>
+
+      <div class="offre">
+        <div class="offre-info">
+          <h3>Cours d’espagnol</h3>
+          <p>En échange d’un cours de judo</p>
+          <p class="interesses">Intéressés : Sébastien H.</p>
+        </div>
+        <button class="interet-btn">Je suis intéressé !</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy" width="24" height="24"></a>
+    </div>
+    <p><a href="#">À propos de nous</a></p>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

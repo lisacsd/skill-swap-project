@@ -26,7 +26,7 @@ body {
   padding: 0.8rem 2rem;
   background-color: #f8f8f8;
   border-radius: 8px;
-  min-height: 10px; 
+  min-height: 10px; /* ← ajuste cette valeur si nécessaire */
 }
 
 header img {
@@ -59,7 +59,7 @@ header img {
   align-items: center;
 }
 
-#login-btn, #signup-btn, #profile-btn{
+.btn-login {
   background-color: #f0f0f0;
   font-weight: bold;
   font-size: 0.9rem;
@@ -70,7 +70,7 @@ header img {
   border: none;
   align-self: center;
 }
-#login-btn:hover, #signup-btn:hover, #profile-btn:hover {
+.btn-login:hover {
   background-color: rgb(216, 219, 225);
   transition: 0.3s;
 }
@@ -184,7 +184,7 @@ footer img:hover {
     gap: 0.5rem;
   }
 
-  #login-btn, #signup-btn, #profile-btn {
+  .btn-login {
     align-self: flex-end;
   }
 
@@ -197,6 +197,9 @@ footer img:hover {
     left: 1rem;
   }
 }
+
+
+
 
 
 /* RESET */
@@ -416,7 +419,9 @@ button.btn-primary {
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 20px;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
 }
 
@@ -543,32 +548,12 @@ button.btn-primary {
   transition: 0.3s;
 }
 
-<<<<<<< HEAD:frontend/style.css
 
 
 #edit-form {
   display: none;
 }
 
-=======
-.logout-button {
-  background-color: #f44336; /* Couleur rouge pour attirer l'attention */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  border-radius: 5px;
-}
-
-.logout-button:hover {
-  background-color: #d32f2f; /* Un peu plus sombre au survol */
-}
-
-#edit-form{
-  display: none;
-}
->>>>>>> 88b09b10c64b22476db6a220280ebc8a7946bb68:public/style.css
 
 .form-container form {
   display: none;
@@ -601,78 +586,5 @@ button.btn-primary {
 
 .toggle-banner.open #toggle-icon {
   transform: rotate(45deg);
-}
-
-<<<<<<< HEAD:frontend/style.css
-=======
-/* conteneur de chaque offre */
-.offre {
-  position: relative;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-  overflow: hidden; /* hauteur compacte */
-  transition: max-height 0.3s ease, padding 0.3s ease;
-}
-
-.container {
-  display: flex;
-  gap: 16px;
-}
-
-.left {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 3;
-}
-
-#bouton-interet, .offre-actions{
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-}
-
-.interest-btn {
-  background-color: #4a7aff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-/* détails cachés */
-.offre-details {
-  display: none;
-}
-
-/* toggler */
-.toggle-text {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #007bff;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-/* état “expanded” : on agrandit et on affiche les détails */
-.offre.expanded {
-        /* ou un max-height plus grand */
-  padding-bottom: 24px;
-}
-
-.offre.expanded .offre-details {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 12px;
-  width: 100%;
-}
-
-
-#mes-offres-container{
-  max-height: none;  
 }
 
