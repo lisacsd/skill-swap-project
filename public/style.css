@@ -426,10 +426,6 @@ button.btn-primary {
 
 .offre-actions {
   display: flex;
-  flex-direction: column; /* Aligner les boutons en colonne */
-  position: absolute;
-  top: 20px;
-  right: 20px; /* Positionne les boutons dans le coin supérieur droit */
 }
 
 .interet-btn {
