@@ -233,19 +233,23 @@
         const div = document.createElement('div');
         div.className = 'offre';
         div.innerHTML = `
-          <div class="offre-info">
-            <h3>${offre.titre}</h3>
-            <p>${offre.description}</p>
-            <p>Niveau : ${offre.niveau}</p>
-            <p>Durée : ${offre.duree_estimee}</p>
-            <p>Localisation : ${offre.localisation}</p>
-            <p class="interesses">
-              Intéressés : ${offre.interesses || 'Aucun'}
-            </p>
+        <div class="container" >
+          <div class="left">
+            <div class="offre-info">
+              <h3>${offre.titre}</h3>
+              <p>${offre.description}</p>
+              <p>Niveau : ${offre.niveau}</p>
+              <p>Durée : ${offre.duree_estimee}</p>
+              <p>Localisation : ${offre.localisation}</p>
+              <p class="interesses">
+                Intéressés : ${offre.interesses || 'Aucun'}
+              </p>
+            </div>
           </div>
           <div class="offre-actions">
             <button class="interet-btn" data-id="${offre.id}" id="supprimer-${offre.id}">Supprimer</button>
           </div>
+        </div>
         `;
         container.appendChild(div);
 

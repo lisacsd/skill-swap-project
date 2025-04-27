@@ -143,19 +143,26 @@
       const card = document.createElement('div');
       card.className = 'offre';
       card.innerHTML = `
-        <div class="offre-info">
-          <h3>${offre.titre}</h3>
-          <p style="font-size:0.9rem;color:#555;">Proposé par : ${offre.proposeur}</p>
-          <p>${offre.description}</p>
+      <div class="container">
+        <div class="left">
+          <div class="offre-info">
+            <h3>${offre.titre}</h3>
+            <p style="font-size:0.9rem;color:#555;">Proposé par : ${offre.nom}</p>
+            <p>${offre.description}</p>
+          </div>
+          <div class="offre-details">
+            <p style="margin-right:16px;"><strong>Niveau :</strong> ${offre.niveau}</p>
+            <p style="margin-right:16px;"><strong>Durée :</strong> ${offre.duree_estimee}</p>
+            <p style="margin-right:16px;"><strong>Localisation :</strong> ${offre.localisation}</p>
+            <p><strong>Tags :</strong> ${offre.tags}</p>
+          </div>
         </div>
-        <div class="offre-details">
-          <p style="margin-right:16px;"><strong>Niveau :</strong> ${offre.niveau}</p>
-          <p style="margin-right:16px;"><strong>Durée :</strong> ${offre.duree_estimee}</p>
-          <p style="margin-right:16px;"><strong>Localisation :</strong> ${offre.localisation}</p>
-          <p><strong>Tags :</strong> ${offre.tags}</p>
+        <div id="bouton-interet">
+          <button class="interest-btn">Je suis intéressé !</button>
         </div>
-        <div class="toggle-text">En savoir plus ↓</div>
-        <button class="interest-btn">Je suis intéressé !</button>
+      </div>
+      <div class="toggle-text">En savoir plus ↓</div>
+        
       `;
       container.appendChild(card);
 
