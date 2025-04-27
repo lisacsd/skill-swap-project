@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap - Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html" id="offres-btn" style="display: none;">Mes offres</a>
+      <a href="Mesinscription.html" id="inscriptions-btn" style="display: none;">Mes inscriptions</a>
+      <a href="admin.html" id="admin-link" style="display: none;">Gérer les utilisateurs</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" id="login-btn" style="display: inline-block;">Se connecter</a>
+      <a href="inscription.html" id="signup-btn" style="display: inline-block;">S’inscrire</a>
+      <a href="profil.html" id="profile-btn" style="display: none;">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="message">
+        <h1>Échangez vos compétences<br>pour apprendre de manière ludique.</h1>
+      </div>
+      <!-- Conteneur pour afficher le message de bienvenue -->
+      <div id="welcome-message" style="display: none; padding: 10px; background-color: #4CAF50; color: white; text-align: center; font-size: 18px; position: relative;">
+        Content de vous voir, <span id="user-name"></span> !
+      </div>
+      <!-- Bouton initial "Créer un compte" -->
+      <a id="create-account-btn" href="login.html" class="btn-primary">Lancez-vous à l'aventure</a>
+    </section>
+
+    <section class="intro">
+      <h2>Favorisons l’apprentissage collaboratif plutôt que la consommation.</h2>
+      <p>
+        En choisissant SkillSwap, vous contribuez à créer une communauté solidaire fondée sur l'entraide et le partage de connaissances.
+        Que vous souhaitiez apprendre une nouvelle compétence ou transmettre la vôtre, SkillSwap valorise chaque savoir-faire
+        et facilite des échanges équitables entre utilisateurs. C’est une manière simple, humaine et durable de se former autrement,
+        sans pression et sans frais.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy" width="24" height="24"></a>
+    </div>
+    <p><a href="#">À propos de nous</a></p>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+  // Vérifie si l'utilisateur est connecté et met à jour dynamiquement l'interface
+  fetch('/api/user')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Non connecté");
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log("Utilisateur connecté :", data);
+
+      // Afficher le message de bienvenue avec le nom de l'utilisateur
+      document.getElementById("welcome-message").style.display = "block";
+      document.getElementById("user-name").textContent = data.nom;
+
+      // Masquer le bouton "Créer un compte"
+      document.getElementById("create-account-btn").style.display = "none";
+
+      // Afficher les éléments visibles uniquement pour les utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "inline-block";
+      document.getElementById("inscriptions-btn").style.display = "inline-block";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "inline-block");
+
+      // Masquer les boutons "Se connecter" et "S'inscrire"
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("signup-btn").style.display = "none";
+
+      // Afficher le lien admin si l'utilisateur est administrateur
+      if (data.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline-block";
+        document.getElementById("login-btn").style.display = "inline-block";
+        document.getElementById("signup-btn").style.display = "inline-block";
+        sessionStorage.setItem("userRole", "admin");
+      } else {
+        sessionStorage.setItem("userRole", "utilisateur");
+      }
+
+      // Enregistrer l'état de connexion
+      sessionStorage.setItem("isLoggedIn", true);
+    })
+    .catch(err => {
+      console.log("Utilisateur non connecté");
+
+      // Masquer tous les éléments réservés aux utilisateurs connectés
+      document.getElementById("welcome-message").style.display = "none";
+      document.getElementById("offres-btn").style.display = "none";
+      document.getElementById("inscriptions-btn").style.display = "none";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "none");
+      document.getElementById("admin-link").style.display = "none";
+
+      // Afficher les boutons de connexion
+      document.getElementById("login-btn").style.display = "inline-block";
+      document.getElementById("signup-btn").style.display = "inline-block";
+
+      // Réinitialiser l'état dans sessionStorage
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("userRole");
+    });
+</script>
+
+</body>
+</html>
+

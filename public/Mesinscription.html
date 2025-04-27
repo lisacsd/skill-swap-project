@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap - Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html" id="offres-btn" style="display: none;">Mes offres</a>
+      <a href="Mesinscription.html" id="inscriptions-btn" style="display: none;">Mes inscriptions</a>
+      <a href="admin.html" id="admin-link" style="display: none;">Gérer les utilisateurs</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" id="login-btn" style="display: inline-block;">Se connecter</a>
+      <a href="inscription.html" id="signup-btn" style="display: inline-block;">S’inscrire</a>
+      <a href="profil.html" id="profile-btn" style="display: none;">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="message">
+        <h1>  Mes inscriptions  </h1>
+      </div>
+    </section>
+
+    <section class="offres-section">
+      <h2>Mes inscriptions</h2>
+      <div id="inscriptions-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy" width="24" height="24"></a>
+    </div>
+    <p><a href="#">À propos de nous</a></p>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+   // Vérifie si l'utilisateur est connecté et met à jour dynamiquement l'interface
+  fetch('/api/user', {
+    credentials: "include" // important pour que les cookies de session soient inclus
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Non connecté");
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log("Utilisateur connecté :", data);
+
+      // Afficher les éléments visibles uniquement pour les utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "inline-block";
+      document.getElementById("inscriptions-btn").style.display = "inline-block";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "inline-block");
+
+      // Masquer les boutons "Se connecter" et "S'inscrire"
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("signup-btn").style.display = "none";
+
+      // Afficher le lien admin si l'utilisateur est administrateur
+      if (data.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline-block";
+        sessionStorage.setItem("userRole", "admin");
+      } else {
+        sessionStorage.setItem("userRole", "utilisateur");
+      }
+
+      // Enregistrer l'état de connexion
+      sessionStorage.setItem("isLoggedIn", true);
+    })
+    .catch(err => {
+      console.log("Utilisateur non connecté");
+
+      // Masquer tous les éléments réservés aux utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "none";
+      document.getElementById("inscriptions-btn").style.display = "none";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "none");
+      document.getElementById("admin-link").style.display = "none";
+
+      // Afficher les boutons de connexion
+      document.getElementById("login-btn").style.display = "inline-block";
+      document.getElementById("signup-btn").style.display = "inline-block";
+
+      // Réinitialiser l'état dans sessionStorage
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("userRole");
+    });
+
+    // Vérifier la connexion + récupérer les inscriptions
+  fetch('/api/inscriptions', { credentials: 'include' })
+    .then(res => {
+      if (!res.ok) throw new Error('Non autorisé');
+      return res.json();
+    })
+    .then(inscriptions => {
+      const container = document.getElementById('inscriptions-container');
+      if (inscriptions.length === 0) {
+        container.innerHTML = '<p>Vous n\'êtes inscrit à aucune offre.</p>';
+        return;
+      }
+      inscriptions.forEach(insc => {
+        const div = document.createElement('div');
+        div.className = 'offre';
+        div.innerHTML = `
+          <div class="offre-info">
+            <h3>${insc.titre}</h3>
+            <p>${insc.description}</p>
+            <p class="interesses">Proposée par : ${insc.auteur}</p>
+          </div>
+          <button class="dinteret-btn" data-id="${insc.id}">
+            Je ne suis plus intéressé 🗑️
+          </button>
+        `;
+        container.appendChild(div);
+
+        // Listener pour retirer l'inscription
+        div.querySelector('.dinteret-btn')
+          .addEventListener('click', async () => {
+            try {
+              const resp = await fetch('/api/interet', {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ offreID: insc.id })
+              });
+              if (!resp.ok) throw new Error('Impossible de retirer l’intérêt');
+              // Retirer du DOM
+              div.remove();
+            } catch (e) {
+              console.error(e);
+              alert(e.message);
+            }
+          });
+      });
+    })
+    .catch(err => {
+      console.error('Erreur chargement inscriptions :', err);
+      document.getElementById('inscriptions-container')
+        .innerHTML = '<p>Impossible de charger vos inscriptions.</p>';
+    });
+    
+  </script>
+</body>
+</html>

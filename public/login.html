@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - SkillSwap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <div class="login-container">
+      <a href="index.html">
+        <img src="img/logocomplet.png" alt="Logo SkillSwap" class="logo" loading="lazy" width="200" height="auto">
+      </a>
+      <form class="login-box" id="login-form">
+        <h1>Connectez-vous</h1>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Votre email" required />
+
+        <label for="password">Mot de passe</label>
+        <div class="password-wrapper">
+          <div class="password-field">
+            <input type="password" id="password" placeholder="Votre mot de passe" required />
+          </div>
+          <div class="button-field">
+            <button type="button" class="toggle-password" data-target="password">Voir</button>
+          </div>
+        </div>
+
+        <p class="password-error" style="display: none;">L'Email ou le mot de passe est incorrect</p>
+
+        <button type="submit">Se connecter</button>
+
+        <p class="signup-text">Pas encore de compte ? <a href="inscription.html">Inscrivez-vous !</a></p>
+      </form>
+    </div>
+  </main>
+
+  <!-- JS -->
+  <script>
+    // Gestion de la visibilité du mot de passe
+    document.querySelectorAll('.toggle-password').forEach(button => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.target);
+        const isVisible = input.type === 'text';
+        input.type = isVisible ? 'password' : 'text';
+        button.textContent = isVisible ? 'Voir' : 'Masquer';
+      });
+    });
+  
+    // Soumission du formulaire de connexion
+    document.getElementById("login-form").addEventListener("submit", async function(e) {
+      e.preventDefault(); // Empêche le rechargement de la page
+  
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+  
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+  
+        if (res.ok) {
+          // Connexion réussie, redirection vers l'accueil
+          sessionStorage.setItem("justLoggedIn", "true");
+          window.location.href = "index.html";
+        } else {
+          // Affiche le message d’erreur si mauvais identifiants
+          document.querySelector(".password-error").style.display = "block";
+        }
+      } catch (error) {
+        console.error("Erreur de connexion :", error);
+      }
+    });
+  </script>  
+</body>
+</html>
