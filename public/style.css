@@ -543,32 +543,12 @@ button.btn-primary {
   transition: 0.3s;
 }
 
-<<<<<<< HEAD:frontend/style.css
 
 
 #edit-form {
   display: none;
 }
 
-=======
-.logout-button {
-  background-color: #f44336; /* Couleur rouge pour attirer l'attention */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  border-radius: 5px;
-}
-
-.logout-button:hover {
-  background-color: #d32f2f; /* Un peu plus sombre au survol */
-}
-
-#edit-form{
-  display: none;
-}
->>>>>>> 88b09b10c64b22476db6a220280ebc8a7946bb68:public/style.css
 
 .form-container form {
   display: none;
@@ -603,8 +583,6 @@ button.btn-primary {
   transform: rotate(45deg);
 }
 
-<<<<<<< HEAD:frontend/style.css
-=======
 /* conteneur de chaque offre */
 .offre {
   position: relative;
