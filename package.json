@@ -1,0 +1,26 @@
+{
+  "name": "skill-swap-project",
+  "version": "1.0.0",
+  "description": "Plateforme web légère d’échange de compétences entre utilisateurs — Mini-projet GreenIT EFREI 2024-2025",
+  "main": "serveur.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisacsd/skill-swap-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lisacsd/skill-swap-project/issues"
+  },
+  "homepage": "https://github.com/lisacsd/skill-swap-project#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.14.0"
+  }
+}

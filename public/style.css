@@ -1,0 +1,658 @@
+/* RESET & BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  color: #111;
+  background-color: #fff;
+}
+
+body {
+  width: 100%;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.8rem 2rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  min-height: 10px; 
+}
+
+header img {
+  height: 45px;
+  width: auto;
+  margin-right: 1rem;
+  justify-content: flex-start;
+}
+
+.header nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.header nav a {
+  text-decoration: none;
+  color: #555454;
+  font-size: 0.95rem;
+}
+
+.header nav a:hover {
+  color: #000000;
+  transition: 0.2s;
+}
+
+.user-actions {
+  display: flex;
+  gap: 0.5rem; /* Moins d'espace entre les boutons */
+  align-items: center;
+}
+
+#login-btn, #signup-btn, #profile-btn{
+  background-color: #f0f0f0;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #000;
+  border: none;
+  align-self: center;
+}
+#login-btn:hover, #signup-btn:hover, #profile-btn:hover {
+  background-color: rgb(216, 219, 225);
+  transition: 0.3s;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 3rem auto 2rem;
+  padding: 0 1rem;
+}
+
+.message {
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 2.5rem 3rem;
+  border-radius: 32px;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.message::after {
+  content: "";
+  position: absolute;
+  left: 2rem;
+  bottom: -30px;
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-top: 40px solid #f0f0f0;
+}
+
+.btn-primary {
+  background-color: #3f83f8;
+  color: white;
+  padding: 0.9rem 1.6rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
+
+/* INTRO */
+.intro {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.intro h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.intro p {
+  font-size: 1rem;
+  color: #444;
+  max-width: 750px;
+  margin: auto;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 4rem;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #333;
+  background-color: #f8f8f8;
+  text-align: center;
+  border-radius: 8px;
+}
+
+footer .socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+footer img {
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: 0.3s;
+  width: 24px;
+  height: 24px;
+}
+
+footer img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .header nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #login-btn, #signup-btn, #profile-btn {
+    align-self: flex-end;
+  }
+
+  .message {
+    font-size: 1.4rem;
+    padding: 2rem 1rem;
+  }
+
+  .message::after {
+    left: 1rem;
+  }
+}
+
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #fff;
+  color: #111;
+  scroll-behavior: smooth;
+}
+
+/* CONTAINER */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: 100vh;
+}
+
+/* LOGO */
+.logo {
+  margin-bottom: 2rem;
+  height: auto;
+}
+
+/* FORM */
+.login-box {
+  border: 2px solid #888;
+  border-radius: 24px;
+  padding: 2.5rem;
+  max-width: 350px;
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.login-box h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.8rem;
+}
+
+/* LABELS & INPUTS */
+label {
+  display: block;
+  text-align: left;
+  margin: 0.6rem 0 0.3rem;
+  font-size: 0.95rem;
+}
+
+input{
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 2px solid #888;
+  background-color: #eee;
+  font-size: 1rem;
+  /*margin-bottom: 1rem;*/
+}
+
+/* BUTTON */
+button{
+  width: 100%;
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  padding: 0.7rem 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  /*margin-top: 0.5rem;*/
+}
+.submit{
+  margin-top: 20px;
+}
+/* SIGNUP TEXT */
+.signup-text {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.signup-text a {
+  color: #000;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 2rem 1.5rem;
+  }
+}
+
+
+.form-container {
+  max-width: 700px;
+  margin: 3rem auto;
+  background-color: #f0f0f0;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.form-container h1 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #222;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+button.btn-primary {
+  display: block;
+  margin: 2rem auto 0;
+  background-color: #3f83f8;
+  color: white;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: rgb(47, 87, 156);
+  transition: 0.3s;
+}
+
+
+.search-bar {
+  display: flex;
+  align-items: center; /* Aligne verticalement l'input et le bouton */
+  justify-content: space-between; /* Espace entre l'input et le bouton */
+  max-width: 500px; /* Limite la largeur de la barre */
+  width: 100%;
+  margin: 30px auto;
+  padding: 8px 16px;
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre douce */
+}
+
+.search-bar input {
+  flex: 7;
+  padding: 12px 20px; 
+  border: none;
+  border-radius: 50px 0 0 50px;
+  background-color: #f0f0f0;
+  box-sizing: border-box; 
+  height: 40px; /
+}
+
+.search-bar button {
+  flex: 3;
+  padding: 10px 20px;
+  background-color: #4a7aff;
+  color: white;
+  border: none;
+  border-radius: 0 50px 50px 0;
+  cursor: pointer;
+  height: 40px; 
+  }
+
+  .search-bar button:hover{
+    background-color: rgb(47, 87, 156);
+    transition: 0.3s;
+  }
+
+
+.offres-section {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.offres-section h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.offre {
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.offre-info {
+  max-width: 75%;
+}
+
+.offre-actions {
+  display: flex;
+  flex-direction: column; /* Aligner les boutons en colonne */
+  position: absolute;
+  top: 20px;
+  right: 20px; /* Positionne les boutons dans le coin supérieur droit */
+}
+
+.interet-btn {
+  background-color: #4a7aff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  width: auto;  /* Cela garantit que le bouton ne prend pas toute la place */
+  margin-left: auto;  /* Positionne le bouton à droite */
+  margin: 5px 0;
+}
+
+
+.interet-btn:hover{
+  background-color: rgb(47, 87, 156);
+  transition: 0.3s;
+}
+
+.dinteret-btn {
+  background-color: #ff503c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  width: auto;  /* Cela garantit que le bouton ne prend pas toute la place */
+  margin-left: auto;  /* Positionne le bouton à droite */
+  margin: 5px 0;
+}
+.dinteret-btn:hover{
+  background-color: #ff1e00;
+  transition: 0.4s;
+}
+
+
+.offre-info h3 {
+  margin: 0 0 10px;
+}
+
+.offre-info p {
+  margin: 4px 0;
+}
+
+.password-error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+
+.info-field {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  background-color: #f4f4f4;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.password-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 1rem; 
+  margin-bottom: 30px;
+}
+
+.password-field {
+  flex: 0 0 80%;
+}
+
+.button-field {
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.password {
+  transition: opacity 0.4s ease;
+}
+
+.toggle-password {
+  font-size: 0.8rem;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.toggle-password:hover {
+  background-color: rgb(207, 211, 219); 
+  transition: 0.3s;
+}
+
+
+.toggle-password-btn {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-password-btn:hover {
+  background-color: rgb(207, 211, 219); 
+  transition: 0.3s;
+}
+
+<<<<<<< HEAD:frontend/style.css
+
+
+#edit-form {
+  display: none;
+}
+
+=======
+.logout-button {
+  background-color: #f44336; /* Couleur rouge pour attirer l'attention */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f; /* Un peu plus sombre au survol */
+}
+
+#edit-form{
+  display: none;
+}
+>>>>>>> 88b09b10c64b22476db6a220280ebc8a7946bb68:public/style.css
+
+.form-container form {
+  display: none;
+}
+
+.form-container h1 {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.form-container form {
+  transition: all 0.3s ease;
+}
+
+.toggle-banner {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+#toggle-icon {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.toggle-banner.open #toggle-icon {
+  transform: rotate(45deg);
+}
+
+<<<<<<< HEAD:frontend/style.css
+=======
+/* conteneur de chaque offre */
+.offre {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  max-height: 180px;              /* hauteur “compacte” */
+}
+
+
+/* état “agrandi” */
+.offre.expanded {
+  max-height: 600px;              /* assez grand pour tout afficher */
+  padding-bottom: 40px;           /* espace pour le bouton interest */
+}
+
+/* détails cachés par défaut */
+.offre-details {
+  display: none;
+}
+
+/* en mode “expanded”, on affiche en flex-row */
+.offre.expanded .offre-details {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+/* toggler “En savoir plus” */
+.toggle-text {
+  align-items: center;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.interest-btn{
+  align-items: center;
+  justify-content: flex-end;
+}
+>>>>>>> 88b09b10c64b22476db6a220280ebc8a7946bb68:public/style.css

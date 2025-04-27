@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Créer une compétence - SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html" id="offres-btn" style="display: none;">Mes offres</a>
+      <a href="Mesinscription.html" id="inscriptions-btn" style="display: none;">Mes inscriptions</a>
+      <a href="admin.html" id="admin-link" style="display: none;">Gérer les utilisateurs</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" id="login-btn" style="display: inline-block;">Se connecter</a>
+      <a href="inscription.html" id="signup-btn" style="display: inline-block;">S’inscrire</a>
+      <a href="profil.html" id="profile-btn" style="display: none;">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h1>Créer une annonce
+        <span id="toggle-icon">+</span>
+      </h1>
+
+      <form id="form-ajout-offre">
+        <div class="form-group">
+          <label for="titre">Titre de l'annonce</label>
+          <input type="text" id="titre" name="titre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="categorie">Catégorie</label>
+          <select id="categorie" name="categorie">
+              <option value="Art">Art</option>
+              <option value="Sport">Sport</option>
+              <option value="Informatique">Informatique</option>
+              <option value="Cuisine">Cuisine</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="niveau">Niveau</label>
+          <select id="niveau" name="niveau">
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Avancé">Avancé</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="duree">Durée estimée (en heures)</label>
+          <input type="number" id="duree" name="duree" min="1" max="20" required>
+        </div>
+
+        <div class="form-group">
+          <label for="localisation">Localisation</label>
+          <input type="text" id="localisation" name="localisation">
+        </div>
+
+        <button type="submit" class="btn-primary">Publier l’offre</button>
+      </form>
+    </div>
+    <section class="offres-section">
+      <h2>Mes propositions d'offres</h2>
+      <div id="mes-offres-container"></div>
+    </section>
+  </main>
+  
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy"></a>
+    </div>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+
+ document.addEventListener('DOMContentLoaded', () => {
+      const banner = document.querySelector('.form-container h1');
+      const form   = document.querySelector('.form-container form');
+      const icon   = document.getElementById('toggle-icon');
+
+      banner.addEventListener('click', () => {
+        // bascule l'affichage du formulaire
+        const isVisible = getComputedStyle(form).display !== 'none';
+        form.style.display = isVisible ? 'none' : 'block';
+        banner.classList.toggle('open', !isVisible);
+
+        icon.textContent = isVisible ? '+' : '–';
+      });
+    });
+
+
+   // Vérifie si l'utilisateur est connecté et met à jour dynamiquement l'interface
+  fetch('/api/user', {
+    credentials: "include" // important pour que les cookies de session soient inclus
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Non connecté");
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log("Utilisateur connecté :", data);
+
+      // Afficher les éléments visibles uniquement pour les utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "inline-block";
+      document.getElementById("inscriptions-btn").style.display = "inline-block";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "inline-block");
+
+      // Masquer les boutons "Se connecter" et "S'inscrire"
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("signup-btn").style.display = "none";
+
+      // Afficher le lien admin si l'utilisateur est administrateur
+      if (data.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline-block";
+        sessionStorage.setItem("userRole", "admin");
+      } else {
+        sessionStorage.setItem("userRole", "utilisateur");
+      }
+
+      // Enregistrer l'état de connexion
+      sessionStorage.setItem("isLoggedIn", true);
+    })
+    .catch(err => {
+      console.log("Utilisateur non connecté");
+
+      // Masquer tous les éléments réservés aux utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "none";
+      document.getElementById("inscriptions-btn").style.display = "none";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "none");
+      document.getElementById("admin-link").style.display = "none";
+
+      // Afficher les boutons de connexion
+      document.getElementById("login-btn").style.display = "inline-block";
+      document.getElementById("signup-btn").style.display = "inline-block";
+
+      // Réinitialiser l'état dans sessionStorage
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("userRole");
+    });
+
+
+    document.querySelector("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const titre = document.getElementById("titre").value;
+      const description = document.getElementById("description").value;
+      const niveau = document.getElementById("niveau").value;
+      const duree_estimee = document.getElementById("duree").value + " heures"; // par exemple
+      const localisation = document.getElementById("localisation").value;
+      const categorieText = document.getElementById("categorie").value;
+      const categorieID = categorieText === "Art" ? 1 :
+                          categorieText === "Sport" ? 2 :
+                          categorieText === "Informatique" ? 3 :
+                          categorieText === "Cuisine" ? 4 : null;
+
+      if (categorieID === null) {
+        alert("Catégorie invalide");
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/creer-offre', {
+          method: 'POST',
+          credentials: 'include', // ⬅️ SUPER IMPORTANT
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            titre,
+            description,
+            niveau,
+            duree_estimee,
+            localisation,
+            tags: "", 
+            categorieID
+          })
+        });
+
+        // Si non autorisé, on redirige vers login
+        if (response.status === 401) {
+          alert('Vous devez être connecté pour créer une offre.');
+          return window.location.href = 'login.html';
+        }
+
+        // 1) En cas de 401 ou 404, on lit d'abord en texte pour voir ce que renvoie le serveur
+        if (response.ok) {
+          alert("Offre créée !");
+          window.location.reload();
+        } else {
+          const data = await response.json();
+          alert("Erreur : " + data.message);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la création :", error);
+        alert("Erreur réseau");
+      }
+    });
+
+     // Récupère et affiche les offres de l'utilisateur connecté
+  fetch('/api/mes-offres', { credentials: 'include' })
+    .then(res => {
+      if (!res.ok) throw new Error('Non autorisé');
+      return res.json();
+    })
+    .then(offres => {
+      const container = document.getElementById('mes-offres-container');
+      if (offres.length === 0) {
+        container.innerHTML = '<p>Vous n\'avez publié aucune offre pour le moment.</p>';
+        return;
+      }
+      offres.forEach(offre => {
+        const div = document.createElement('div');
+        div.className = 'offre';
+        div.innerHTML = `
+          <div class="offre-info">
+            <h3>${offre.titre}</h3>
+            <p>${offre.description}</p>
+            <p>Niveau : ${offre.niveau}</p>
+            <p>Durée : ${offre.duree_estimee}</p>
+            <p>Localisation : ${offre.localisation}</p>
+            <p class="interesses">
+              Intéressés : ${offre.interesses || 'Aucun'}
+            </p>
+          </div>
+          <div class="offre-actions">
+            <button class="interet-btn" data-id="${offre.id}" id="supprimer-${offre.id}">Supprimer</button>
+          </div>
+        `;
+        container.appendChild(div);
+
+        // listeners pour modifier/supprimer :
+        document.getElementById(`supprimer-${offre.id}`)
+        .addEventListener('click', async () => {
+          if (!confirm('Voulez-vous vraiment supprimer cette offre ?')) return;
+
+          try {
+            const res = await fetch(`/api/offres/${offre.id}`, {
+              method: 'DELETE',
+              credentials: 'include'
+            });
+
+            if (!res.ok) {
+              const err = await res.json();
+              return alert('Erreur : ' + err.message);
+            }
+
+            // Retirer du DOM
+            document
+              .getElementById(`supprimer-${offre.id}`)
+              .closest('.offre')
+              .remove();
+
+            alert('Offre supprimée.');
+          } catch (e) {
+            console.error('Erreur réseau :', e);
+            alert('Erreur réseau, réessayez.');
+          }
+        });
+      });
+    })
+    .catch(err => {
+      console.error('Erreur chargement mes offres :', err);
+      document.getElementById('mes-offres-container')
+        .innerHTML = '<p>Impossible de charger vos offres.</p>';
+    });
+</script>
+  </script>
+</body>
+</html>

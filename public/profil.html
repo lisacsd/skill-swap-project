@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - SkillSwap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html" id="offres-btn" style="display: none;">Mes offres</a>
+      <a href="Mesinscription.html" id="inscriptions-btn" style="display: none;">Mes inscriptions</a>
+      <a href="admin.html" id="admin-link" style="display: none;">Gérer les utilisateurs</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" id="login-btn" style="display: inline-block;">Se connecter</a>
+      <a href="inscription.html" id="signup-btn" style="display: inline-block;">S’inscrire</a>
+      <a href="profil.html" id="profile-btn" style="display: none;">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Profil Affichage -->
+    <div class="form-container">
+      <h1>Mon Profil</h1>
+      <div class="profile-content">
+        <div class="profile-image"></div>
+
+        <div class="profile-info">
+          <label>Nom :</label>
+          <div class="info-field">Jean Dupont</div>
+
+          <label>Email :</label>
+          <div class="info-field">jean.dupont@example.com</div>
+
+          <label>Mot de passe :</label>
+          <div class="password-wrapper">
+            <div class="password-field">
+              <input type="password" id="password-profile" value="******" class="password" readonly />
+            </div>
+            <div class="button-field">
+              <button class="toggle-password" data-target="password-profile">Voir</button>
+            </div>
+          </div>
+
+          <button class="edit-button">Modifier le profil</button>
+          <button id="logout-btn" class="logout-button">Se déconnecter</button> <!-- Bouton déconnexion -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire Modification -->
+    <div class="login-container">
+      <form class="login-box" id="edit-form">
+        <h1>Modifier votre compte</h1>
+
+        <label for="username-edit">Nom d'utilisateur</label>
+        <input type="text" id="username-edit" value="Loeiz" required>
+
+        <label for="email-edit">Email</label>
+        <input type="email" id="email-edit" value="mon-adresse-mail@gmail.com" required>
+
+        <label for="password-edit">Mot de passe</label>
+        <div class="password-wrapper">
+          <div class="password-field">
+            <input type="password" id="password-edit" value="monmotdepasse" class="password"/>
+          </div>
+          <div class="button-field">
+            <button type="button" class="toggle-password" data-target="password-edit">Voir</button>
+          </div>
+        </div>
+
+        <label for="confirm-password">Confirmez le mot de passe</label>
+        <div class="password-wrapper">
+          <div class="password-field">
+            <input type="password" id="confirm-password" value="monmdp" required />
+          </div>
+          <div class="button-field">
+            <button type="button" class="toggle-password" data-target="confirm-password">Voir</button>
+          </div>
+        </div>
+
+        <div id="password-error" class="password-error">
+          Les mots de passe doivent être identiques et contenir au moins 6 caractères.
+        </div>
+
+        <button type="submit" id="submit">Enregistrer les modifications</button>
+      </form>
+    </div>
+  </main>
+<!-- Footer -->
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy" width="24" height="24"></a>
+    </div>
+    <p><a href="#">À propos de nous</a></p>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Affichage/Masquage des mots de passe
+    document.querySelectorAll('.toggle-password').forEach(button => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.target);
+        const isVisible = input.type === 'text';
+        input.type = isVisible ? 'password' : 'text';
+        button.textContent = isVisible ? 'Voir' : 'Masquer';
+      });
+    });
+
+    document.querySelector('.edit-button').addEventListener('click', function() {
+      document.querySelector('.form-container').style.display = 'none'; // cacher profil
+      document.querySelector('#edit-form').style.display = 'block'; // afficher formulaire
+    });
+    document.querySelector('#submit').addEventListener('click', function() {
+      document.querySelector('.form-container').style.display = 'block'; // cacher profil
+      document.querySelector('#edit-form').style.display = 'none'; // afficher formulaire
+    });
+
+
+   // Vérifie si l'utilisateur est connecté et met à jour dynamiquement l'interface
+  fetch('/api/user', {
+    credentials: "include" // important pour que les cookies de session soient inclus
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Non connecté");
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log("Utilisateur connecté :", data);
+
+      // Afficher les éléments visibles uniquement pour les utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "inline-block";
+      document.getElementById("inscriptions-btn").style.display = "inline-block";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "inline-block");
+
+      // Masquer les boutons "Se connecter" et "S'inscrire"
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("signup-btn").style.display = "none";
+
+      // Afficher le lien admin si l'utilisateur est administrateur
+      if (data.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline-block";
+        sessionStorage.setItem("userRole", "admin");
+      } else {
+        sessionStorage.setItem("userRole", "utilisateur");
+      }
+
+      // Enregistrer l'état de connexion
+      sessionStorage.setItem("isLoggedIn", true);
+    })
+    .catch(err => {
+      console.log("Utilisateur non connecté");
+
+      // Masquer tous les éléments réservés aux utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "none";
+      document.getElementById("inscriptions-btn").style.display = "none";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "none");
+      document.getElementById("admin-link").style.display = "none";
+
+      // Afficher les boutons de connexion
+      document.getElementById("login-btn").style.display = "inline-block";
+      document.getElementById("signup-btn").style.display = "inline-block";
+
+      // Réinitialiser l'état dans sessionStorage
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("userRole");
+    });
+
+    // 1) On récupère l'utilisateur dès le chargement pour pré-remplir
+    fetch('/api/user', { credentials: 'include' })
+        .then(res => {
+          if (!res.ok) throw new Error('Non connecté');
+          return res.json();
+        })
+        .then(user => {
+          // Afficher le profil
+          document.querySelector('.info-field:nth-of-type(1)').textContent = user.nom;
+          document.querySelector('.info-field:nth-of-type(2)').textContent = user.email;
+
+          // Pré-remplir le formulaire de modification
+          document.getElementById('username-edit').value = user.nom;
+          document.getElementById('email-edit').value    = user.email;
+          document.getElementById('password-edit').value = '';            // sécurité : vide
+          document.getElementById('confirm-password').value = '';         // sécurité : vide
+
+          // Afficher le bouton profil
+          document.getElementById('profile-btn').style.display = 'inline-block';
+        })
+        .catch(() => {
+          console.log('Utilisateur non connecté');
+        });
+
+      // 2) Afficher / cacher le formulaire de modification
+      document.querySelector('.edit-button').addEventListener('click', () => {
+        document.querySelector('.form-container').style.display = 'none';
+        document.getElementById('edit-form').style.display    = 'block';
+      });
+
+      // 3) Soumettre les modifications
+      document.getElementById('edit-form').addEventListener('submit', async e => {
+        e.preventDefault();
+
+        const nom         = document.getElementById('username-edit').value;
+        const email       = document.getElementById('email-edit').value;
+        const mdp         = document.getElementById('password-edit').value;
+        const confirmMdp  = document.getElementById('confirm-password').value;
+        const errorDiv    = document.getElementById('password-error');
+
+        // Validation
+        if (mdp && (mdp.length < 6 || mdp !== confirmMdp)) {
+          errorDiv.style.display = 'block';
+          return;
+        }
+        errorDiv.style.display = 'none';
+
+        try {
+          const payload = { nom, email };
+          if (mdp) payload.mot_de_passe = mdp;  // ne l’ajoute que si l’utilisateur en a saisi un
+          const res = await fetch('/api/user', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            return alert('Erreur : ' + err.message);
+          }
+
+          const data = await res.json();
+          alert(data.message);
+
+          // Met à jour l'affichage profil
+          document.querySelector('.form-container').style.display = 'block';
+          document.getElementById('edit-form').style.display     = 'none';
+          document.querySelector('.info-field:nth-of-type(1)').textContent = data.nom;
+          document.querySelector('.info-field:nth-of-type(2)').textContent = data.email;
+        } catch (err) {
+          console.error(err);
+          alert('Erreur réseau.');
+        }
+      });
+
+    // Déconnexion
+    document.getElementById("logout-btn").addEventListener("click", function() {
+      // Appeler la route de déconnexion côté serveur
+      fetch('/api/logout', {
+        method: 'POST',
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Erreur lors de la déconnexion");
+        }
+
+        sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("userRole");
+
+        // Si la déconnexion réussit, rediriger l'utilisateur vers la page d'accueil ou de connexion
+        window.location.href = "index.html"; // Ou vers login.html si vous préférez
+      })
+      .catch(err => {
+        console.error("Erreur : ", err);
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap - Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="index.html">
+      <img src="img/logosansfond.png" alt="Logo SkillSwap" width="28" height="28" loading="lazy" />
+    </a>
+    <nav>
+      <a href="offres.html">Rechercher des offres</a>
+      <a href="Mesoffres.html" id="offres-btn" style="display: none;">Mes offres</a>
+      <a href="Mesinscription.html" id="inscriptions-btn" style="display: none;">Mes inscriptions</a>
+      <a href="admin.html" id="admin-link" style="display: none;">Gérer les utilisateurs</a>
+    </nav>
+    <div class="user-actions">
+      <a href="login.html" id="login-btn" style="display: inline-block;">Se connecter</a>
+      <a href="inscription.html" id="signup-btn" style="display: inline-block;">S’inscrire</a>
+      <a href="profil.html" id="profile-btn" style="display: none;">Mon Compte</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="message">
+        <h1>Trouvez la compétence idéale.</h1>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cours de guitare..." />
+        <button id="searchButton">Rechercher</button>
+      </div>
+    </section>
+
+    <section class="offres-section">
+      <h2>Offres du moment</h2>
+      <div id="offres-container"></div>
+    </section>
+    
+  </main>
+
+  <footer>
+    <p>Suivez-nous</p>
+    <div class="socials">
+      <a href="#"><img src="img/facebook.png" alt="Facebook" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/instagram.png" alt="Instagram" loading="lazy" width="24" height="24"></a>
+      <a href="#"><img src="img/twitter.png" alt="Twitter" loading="lazy" width="24" height="24"></a>
+    </div>
+    <p><a href="#">À propos de nous</a></p>
+    <p>© 2025 SkillSwap. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+  // Vérifie si l'utilisateur est connecté et met à jour dynamiquement l'interface
+  fetch('/api/user', {
+    credentials: "include" // important pour que les cookies de session soient inclus
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Non connecté");
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log("Utilisateur connecté :", data);
+
+      // Afficher les éléments visibles uniquement pour les utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "inline-block";
+      document.getElementById("inscriptions-btn").style.display = "inline-block";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "inline-block");
+
+      // Masquer les boutons "Se connecter" et "S'inscrire"
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("signup-btn").style.display = "none";
+
+      // Afficher le lien admin si l'utilisateur est administrateur
+      if (data.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline-block";
+        sessionStorage.setItem("userRole", "admin");
+      } else {
+        sessionStorage.setItem("userRole", "utilisateur");
+      }
+
+      // Enregistrer l'état de connexion
+      sessionStorage.setItem("isLoggedIn", true);
+    })
+    .catch(err => {
+      console.log("Utilisateur non connecté");
+
+      // Masquer tous les éléments réservés aux utilisateurs connectés
+      document.getElementById("offres-btn").style.display = "none";
+      document.getElementById("inscriptions-btn").style.display = "none";
+      document.querySelectorAll("#profile-btn").forEach(el => el.style.display = "none");
+      document.getElementById("admin-link").style.display = "none";
+
+      // Afficher les boutons de connexion
+      document.getElementById("login-btn").style.display = "inline-block";
+      document.getElementById("signup-btn").style.display = "inline-block";
+
+      // Réinitialiser l'état dans sessionStorage
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("userRole");
+    });
+
+
+    let isLoggedIn = false;
+  let allOffers   = [];
+
+  // 1) Vérification de session
+  fetch('/api/user', { credentials: 'include' })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      isLoggedIn = true;
+    })
+    .catch(() => { isLoggedIn = false; })
+    .finally(loadAndDisplayOffers);
+
+  // 2) Chargement des offres
+  function loadAndDisplayOffers() {
+    fetch('/api/offres', { credentials: 'include' })
+      .then(res => res.json())
+      .then(offres => {
+        allOffers = offres;
+        displayOffers(allOffers);
+      })
+      .catch(console.error);
+  }
+
+  // 3) Affichage + toggle expand/collapse
+  function displayOffers(offres) {
+    const container = document.getElementById('offres-container');
+    container.innerHTML = '';
+
+    if (offres.length === 0) {
+      container.innerHTML = '<p>Aucune offre ne correspond.</p>';
+      return;
+    }
+
+    offres.forEach(offre => {
+      const card = document.createElement('div');
+      card.className = 'offre';
+      card.innerHTML = `
+        <div class="offre-info">
+          <h3>${offre.titre}</h3>
+          <p style="font-size:0.9rem;color:#555;">Proposé par : ${offre.proposeur}</p>
+          <p>${offre.description}</p>
+        </div>
+        <div class="offre-details">
+          <p style="margin-right:16px;"><strong>Niveau :</strong> ${offre.niveau}</p>
+          <p style="margin-right:16px;"><strong>Durée :</strong> ${offre.duree_estimee}</p>
+          <p style="margin-right:16px;"><strong>Localisation :</strong> ${offre.localisation}</p>
+          <p><strong>Tags :</strong> ${offre.tags}</p>
+        </div>
+        <div class="toggle-text">En savoir plus ↓</div>
+        <button class="interest-btn">Je suis intéressé !</button>
+      `;
+      container.appendChild(card);
+
+      const toggle    = card.querySelector('.toggle-text');
+      const details   = card.querySelector('.offre-details');
+      const interest  = card.querySelector('.interest-btn');
+
+      // expand / collapse
+      toggle.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+        toggle.textContent = card.classList.contains('expanded')
+                           ? 'Réduire ↑'
+                           : 'En savoir plus ↓';
+      });
+
+      // bouton “je suis intéressé”
+      interest.addEventListener('click', async () => {
+        if (!isLoggedIn) {
+          return window.location.href = 'login.html';
+        }
+        try {
+          const res = await fetch('/api/interet', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ offreID: offre.id })
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            return alert('Erreur : ' + err.message);
+          }
+          const data = await res.json();
+          alert(data.message);
+          interest.textContent = 'Intéressé ✓';
+          interest.disabled    = true;
+        } catch (e) {
+          console.error(e);
+          alert('Erreur réseau');
+        }
+      });
+    });
+  }
+
+  // 4) Recherche
+  document.getElementById('searchButton').addEventListener('click', () => {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    if (!q) return displayOffers(allOffers);
+
+    const filtered = allOffers.filter(o =>
+      o.titre.toLowerCase().includes(q) ||
+      o.description.toLowerCase().includes(q)
+    );
+    displayOffers(filtered);
+  });
+  document.getElementById('searchInput').addEventListener('input', () => {
+    document.getElementById('searchButton').click();
+  });
+
+  </script>
+</body>
+</html>
